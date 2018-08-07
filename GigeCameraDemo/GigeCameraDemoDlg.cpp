@@ -1274,6 +1274,17 @@ BOOL CGigeCameraDemoDlg::OnInitDialog()
 	GetDlgItem(IDC_TEST)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_RETURN)->ShowWindow(SW_HIDE);
 	
+		//NOTIFYICONDATA nid;
+	nid.cbSize=(DWORD)sizeof(NOTIFYICONDATA); 
+	nid.hWnd=this-> m_hWnd; 
+	nid.uID=IDR_MAINFRAME; 
+	nid.uFlags=NIF_ICON|NIF_MESSAGE|NIF_TIP; 
+	nid.uCallbackMessage=(WM_USER+10);//自定义的消息名称 
+	nid.hIcon=LoadIcon(AfxGetInstanceHandle(),MAKEINTRESOURCE(IDR_MAINFRAME)); 
+	strcpy_s(nid.szTip, "采集任务 ");//信息提示条为"计划任务提醒" 
+	Shell_NotifyIcon(NIM_ADD,&nid);//在托盘区添加图标 
+	//ShowWindow(SW_HIDE);//隐藏主窗口 
+
 	SetUI();
 	RefreshUI ();
 
@@ -1362,16 +1373,16 @@ BOOL CGigeCameraDemoDlg::OnInitDialog()
     Old.x=rect.right-rect.left;
     Old.y=rect.bottom-rect.top;
 
-	//NOTIFYICONDATA nid;
-	nid.cbSize=(DWORD)sizeof(NOTIFYICONDATA); 
-	nid.hWnd=this-> m_hWnd; 
-	nid.uID=IDR_MAINFRAME; 
-	nid.uFlags=NIF_ICON|NIF_MESSAGE|NIF_TIP; 
-	nid.uCallbackMessage=(WM_USER+10);//自定义的消息名称 
-	nid.hIcon=LoadIcon(AfxGetInstanceHandle(),MAKEINTRESOURCE(IDR_MAINFRAME)); 
-	strcpy_s(nid.szTip, "采集任务 ");//信息提示条为"计划任务提醒" 
-	Shell_NotifyIcon(NIM_ADD,&nid);//在托盘区添加图标 
-	//ShowWindow(SW_HIDE);//隐藏主窗口 
+	////NOTIFYICONDATA nid;
+	//nid.cbSize=(DWORD)sizeof(NOTIFYICONDATA); 
+	//nid.hWnd=this-> m_hWnd; 
+	//nid.uID=IDR_MAINFRAME; 
+	//nid.uFlags=NIF_ICON|NIF_MESSAGE|NIF_TIP; 
+	//nid.uCallbackMessage=(WM_USER+10);//自定义的消息名称 
+	//nid.hIcon=LoadIcon(AfxGetInstanceHandle(),MAKEINTRESOURCE(IDR_MAINFRAME)); 
+	//strcpy_s(nid.szTip, "采集任务 ");//信息提示条为"计划任务提醒" 
+	//Shell_NotifyIcon(NIM_ADD,&nid);//在托盘区添加图标 
+	////ShowWindow(SW_HIDE);//隐藏主窗口 
 
 	//WINDOWPLACEMENT m_wp;
 	//GetWindowPlacement(&m_wp); //恢复时用
@@ -1888,53 +1899,53 @@ void CGigeCameraDemoDlg::OnSize(UINT nType, int cx, int cy)
 {
    CDialog::OnSize(nType, cx, cy); 
    
-   if(nType==SIZE_RESTORED||nType==SIZE_MAXIMIZED)
-    {
-       float fsp[2];
-    POINT Newp; //获取现在对话框的大小
-    CRect recta;    
-    GetClientRect(&recta);     //取客户区大小  
-    Newp.x=recta.right-recta.left;
-    Newp.y=recta.bottom-recta.top;
-    fsp[0]=(float)Newp.x/Old.x;
-    fsp[1]=(float)Newp.y/Old.y;
-    CRect Rect;
-    int woc;
-    CPoint OldTLPoint,TLPoint; //左上角
-    CPoint OldBRPoint,BRPoint; //右下角
-    HWND  hwndChild=::GetWindow(m_hWnd,GW_CHILD);  //列出所有控件  
-    while(hwndChild)    
-    {    
-        woc=::GetDlgCtrlID(hwndChild);//取得ID
-        GetDlgItem(woc)->GetWindowRect(Rect);  
-        ScreenToClient(Rect);  
-        OldTLPoint = Rect.TopLeft();  
-        TLPoint.x = long(OldTLPoint.x*fsp[0]);  
-        TLPoint.y = long(OldTLPoint.y*fsp[1]);  
-        OldBRPoint = Rect.BottomRight();  
-        BRPoint.x = long(OldBRPoint.x *fsp[0]);  
-        BRPoint.y = long(OldBRPoint.y *fsp[1]);  
-        Rect.SetRect(TLPoint,BRPoint);  
-        GetDlgItem(woc)->MoveWindow(Rect,TRUE);
-        hwndChild=::GetWindow(hwndChild, GW_HWNDNEXT);    
-    }
-    Old=Newp;
+  // if(nType==SIZE_RESTORED||nType==SIZE_MAXIMIZED)
+  //  {
+  //     float fsp[2];
+  //  POINT Newp; //获取现在对话框的大小
+  //  CRect recta;    
+  //  GetClientRect(&recta);     //取客户区大小  
+  //  Newp.x=recta.right-recta.left;
+  //  Newp.y=recta.bottom-recta.top;
+  //  fsp[0]=(float)Newp.x/Old.x;
+  //  fsp[1]=(float)Newp.y/Old.y;
+  //  CRect Rect;
+  //  int woc;
+  //  CPoint OldTLPoint,TLPoint; //左上角
+  //  CPoint OldBRPoint,BRPoint; //右下角
+  //  HWND  hwndChild=::GetWindow(m_hWnd,GW_CHILD);  //列出所有控件  
+  //  while(hwndChild)    
+  //  {    
+  //      woc=::GetDlgCtrlID(hwndChild);//取得ID
+  //      GetDlgItem(woc)->GetWindowRect(Rect);  
+  //      ScreenToClient(Rect);  
+  //      OldTLPoint = Rect.TopLeft();  
+  //      TLPoint.x = long(OldTLPoint.x*fsp[0]);  
+  //      TLPoint.y = long(OldTLPoint.y*fsp[1]);  
+  //      OldBRPoint = Rect.BottomRight();  
+  //      BRPoint.x = long(OldBRPoint.x *fsp[0]);  
+  //      BRPoint.y = long(OldBRPoint.y *fsp[1]);  
+  //      Rect.SetRect(TLPoint,BRPoint);  
+  //      GetDlgItem(woc)->MoveWindow(Rect,TRUE);
+  //      hwndChild=::GetWindow(hwndChild, GW_HWNDNEXT);    
+  //  }
+  //  Old=Newp;
 
-    }
-   else if(nType==SIZE_MINIMIZED)
-   {
-	 //  NOTIFYICONDATA nid;
-	 //  nid.cbSize=(DWORD)sizeof(NOTIFYICONDATA); 
-		//nid.hWnd=this-> m_hWnd; 
-		//nid.uID=IDR_MAINFRAME; 
-		//nid.uFlags=NIF_ICON|NIF_MESSAGE|NIF_TIP   ; 
-		//nid.uCallbackMessage=(WM_USER+10);//自定义的消息名称 
-		//nid.hIcon=LoadIcon(AfxGetInstanceHandle(),MAKEINTRESOURCE(IDR_MAINFRAME)); 
-		//strcpy(nid.szTip, "计划任务提醒 ");//信息提示条为"计划任务提醒" 
-		//Shell_NotifyIcon(NIM_ADD,&nid);//在托盘区添加图标 
-	    Shell_NotifyIcon(NIM_MODIFY,&nid);//在托盘区添加图标 
-		ShowWindow(SW_HIDE);//隐藏主窗口 
-   }
+  //  }
+  // else if(nType==SIZE_MINIMIZED)
+  // {
+	 ////  NOTIFYICONDATA nid;
+	 ////  nid.cbSize=(DWORD)sizeof(NOTIFYICONDATA); 
+		////nid.hWnd=this-> m_hWnd; 
+		////nid.uID=IDR_MAINFRAME; 
+		////nid.uFlags=NIF_ICON|NIF_MESSAGE|NIF_TIP   ; 
+		////nid.uCallbackMessage=(WM_USER+10);//自定义的消息名称 
+		////nid.hIcon=LoadIcon(AfxGetInstanceHandle(),MAKEINTRESOURCE(IDR_MAINFRAME)); 
+		////strcpy(nid.szTip, "计划任务提醒 ");//信息提示条为"计划任务提醒" 
+		////Shell_NotifyIcon(NIM_ADD,&nid);//在托盘区添加图标 
+	 //   Shell_NotifyIcon(NIM_MODIFY,&nid);//在托盘区添加图标 
+		//ShowWindow(SW_HIDE);//隐藏主窗口 
+  // }
 
    //CRect rClient;
    //GetClientRect(rClient);
