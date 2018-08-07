@@ -220,7 +220,7 @@ LRESULT   CGigeCameraDemoDlg::onShowTask(WPARAM   wParam,LPARAM   lParam)
     return   1; 
     switch(lParam) 
     { 
-            case WM_RBUTTONUP://右键起来时弹出快捷菜单，这里只有一个"关闭" 
+            case WM_LBUTTONUP://右键起来时弹出快捷菜单，这里只有一个"关闭" 
             { 
                 LPPOINT   lpoint=new   tagPOINT; 
                 ::GetCursorPos(lpoint);//得到鼠标位置 
