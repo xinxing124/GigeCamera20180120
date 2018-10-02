@@ -137,6 +137,7 @@ public:
 	//CSerialPort m_SerialPort;
 	CSerialPort m_SerialPortOne;
 	CSerialPort m_SerialPortTwo;
+	CSerialPort m_SerialPortThree;
 	NOTIFYICONDATA nid;
 	bool m_bTimerFlag;
 	POINT Old;

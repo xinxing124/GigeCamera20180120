@@ -1,0 +1,2 @@
+打开编译成64位
+C:\Program Files\Teledyne DALSA\Sapera\Classes\Gui\SapClassGui_2010.vcxproj

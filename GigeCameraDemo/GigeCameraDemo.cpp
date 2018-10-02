@@ -39,7 +39,42 @@ CGigeCameraDemoApp theApp;
 // CGigeCameraDemoApp initialization
 
 BOOL CGigeCameraDemoApp::InitInstance()
-{
+{ 
+	HANDLE m_hMutex = CreateMutex(NULL,TRUE,"Sample07");
+
+	if (m_hMutex == NULL)
+	{
+	return FALSE;
+	}
+
+	//如果程序已经存在并且正在运行
+	if (GetLastError() == ERROR_ALREADY_EXISTS)
+	{
+
+	HWND hProgramWnd = ::FindWindow(NULL,"Sample07");
+	if (hProgramWnd)
+	{
+	WINDOWPLACEMENT* pWndpl = NULL;
+
+	WINDOWPLACEMENT   wpm; 
+	pWndpl =&wpm;
+	GetWindowPlacement(hProgramWnd,&wpm);
+	if (pWndpl)
+	{
+	//将运行的程序窗口还原成正常状态
+	pWndpl->showCmd = SW_SHOWNORMAL;
+	::SetWindowPlacement(hProgramWnd,pWndpl);
+	SetWindowPos(hProgramWnd,HWND_NOTOPMOST,0,0,0,0,SWP_NOSIZE|SWP_NOMOVE);
+	FlashWindow(hProgramWnd,TRUE);//任务栏图标闪烁
+	}
+
+	}
+	//关闭进程互斥体
+
+	CloseHandle(m_hMutex);
+	m_hMutex = NULL;
+	return FALSE;
+	}
 	AfxEnableControlContainer();
 
 	// Standard initialization
