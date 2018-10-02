@@ -1135,6 +1135,7 @@ LRESULT CGigeCameraDemoDlg::OnReceiveData(WPARAM wParam, LPARAM lParam)
 			strMsg.Format("%d",m_iDotInfo);
 			WritePosInfo(strMsg);
 		}
+		break;
 		//	case 3:
 		//		RBufThree[RPosThree++]=(UINT)wParam;
 		//		if(RPosThree>0){
