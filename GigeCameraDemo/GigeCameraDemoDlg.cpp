@@ -2698,32 +2698,14 @@ void CGigeCameraDemoDlg::RefreshUI()
 	int iInfo;
 	CString str = "36.00V";
 	double SpeedVal=0.0;
-	CDC   hMemDC; //加载背景图片的内存DC
-	int cx, cy;  
+	//CDC   hMemDC; //加载背景图片的内存DC
 	CImage  image;
-	CRect   rect;
-	CDC *pDc = NULL;  
-	CWnd *pWnd = NULL;  
-	pWnd    = GetDlgItem(IDC_VIEW_WND3);//获取控件句柄  
-	//pWnd->MoveWindow(0,0,1024,768);
-	pWnd->GetClientRect(&rect);//获取句柄指向控件区域的大小
-	pDc = pWnd->GetDC();//获取picture的DC  
-
-	//pDc =GetDC();//获取picture的DC  
-	//CPaintDC dc(this);
-	CDC  * pMemDc=NULL; //加载背景图片的内存DC
-	pMemDc=new CDC;
-	pMemDc->CreateCompatibleDC(pDc);
-	CBitmap bmp;//这里的Bitmap是必须的，否则当心弄出一个大黑块哦。
-	bmp.CreateCompatibleBitmap(pDc,rect.Width(),rect.Height());
-	pMemDc->SelectObject(&bmp);
+	CDC *pDc = NULL;
+	pDc = GetDlgItem(IDC_VIEW_WND3)->GetDC();//获取picture的DC  
 
 	ImageFrom_IDResource(IDB_PNG57,"PNG",&image);//背景图
-	rect.top =0;
-	rect.left =0;
-	rect.bottom=image.GetHeight();   
-	rect.right =image.GetWidth();  
-	image.Draw(pMemDc->m_hDC, rect);//将图片绘制到picture表示的区域内  
+	
+	image.Draw(pDc->m_hDC, 0,0,1024,768);//将图片绘制到picture表示的区域内  
 	image.Detach();
 	if(m_iTempDirection==0)
 	{
@@ -2733,7 +2715,7 @@ void CGigeCameraDemoDlg::RefreshUI()
 	{
 		ImageFrom_IDResource(IDB_PNG48,"PNG",&image);//下行
 	}
-	image.Draw(pMemDc->m_hDC, m_RectDirectionShow);//将图片绘制到picture表示的区域内  
+	image.Draw(pDc->m_hDC, m_RectDirectionShow);//将图片绘制到picture表示的区域内  
 	image.Detach();
 
 	if(m_iTempAddMileage==0)
@@ -2744,7 +2726,7 @@ void CGigeCameraDemoDlg::RefreshUI()
 	{
 		ImageFrom_IDResource(IDB_PNG50,"PNG",&image);//里程减少
 	}
-	image.Draw(pMemDc->m_hDC, m_RectAddMileageShow);//将图片绘制到picture表示的区域内 
+	image.Draw(pDc->m_hDC, m_RectAddMileageShow);//将图片绘制到picture表示的区域内 
 	image.Detach();
 
 	//m_dbVoltage_1=m_dbVoltage_1*4.4;
@@ -2768,7 +2750,7 @@ void CGigeCameraDemoDlg::RefreshUI()
 	{
 		ImageFrom_IDResource(IDB_PNG56,"PNG",&image); 
 	}
-	image.Draw(pMemDc->m_hDC, m_RectBatteryShow_1);//将图片绘制到picture表示的区域内
+	image.Draw(pDc->m_hDC, m_RectBatteryShow_1);//将图片绘制到picture表示的区域内
 	image.Detach();
 
 	if(m_dbVoltage_2>=12.5)
@@ -2790,33 +2772,33 @@ void CGigeCameraDemoDlg::RefreshUI()
 	{
 		ImageFrom_IDResource(IDB_PNG56,"PNG",&image);
 	}
-	image.Draw(pMemDc->m_hDC, m_RectBatteryShow_2);//将图片绘制到picture表示的区域内 
+	image.Draw(pDc->m_hDC, m_RectBatteryShow_2);//将图片绘制到picture表示的区域内 
 	image.Detach();
 
 	CFont font;
 	//font.CreateFont(15, 0, 0, 0, FW_BOLD,FALSE, FALSE, FALSE, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,   DEFAULT_QUALITY, DEFAULT_PITCH | FF_ROMAN, L"Times New Roman");
 	font.CreateFont(40, 0, 0, 0, FW_NORMAL,FALSE, FALSE, FALSE, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,   DEFAULT_QUALITY, DEFAULT_PITCH | FF_ROMAN, "Times New Roman");
-	pMemDc->SetBkMode(TRANSPARENT);
-	pMemDc->SetTextColor(RGB(255,255,255));    //Static控件1的字体颜色-红色
-	pMemDc->SelectObject(&font); 
+	pDc->SetBkMode(TRANSPARENT);
+	pDc->SetTextColor(RGB(255,255,255));    //Static控件1的字体颜色-红色
+	pDc->SelectObject(&font); 
 
 	//日期时间区域
 	CTime time = CTime::GetCurrentTime();       
 	str.Format("%04d-%02d-%02d %02d:%02d:%02d",time.GetYear(),time.GetMonth(),time.GetDay(),time.GetHour(),time.GetMinute(),time.GetSecond());  
-	pMemDc->DrawText(str,m_RectDateTimeShow, DT_CENTER | DT_EDITCONTROL | DT_WORDBREAK);
+	pDc->DrawText(str,m_RectDateTimeShow, DT_CENTER | DT_EDITCONTROL | DT_WORDBREAK);
 	//里程区域
 	//str.Format(L"2017-03-01 16:32:10");
-	pMemDc->DrawText(m_strTempMileage,m_RectMileageShow, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
+	pDc->DrawText(m_strTempMileage,m_RectMileageShow, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
 	//电池1区域
 	str.Format("%.2fV",m_dbVoltage_1);
-	pMemDc->DrawText(str,m_RectElectricShow_1, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
+	pDc->DrawText(str,m_RectElectricShow_1, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
 	//电池2区域
 	str.Format("%.2fV",m_dbVoltage_2);
-	pMemDc->DrawText(str,m_RectElectricShow_2, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
+	pDc->DrawText(str,m_RectElectricShow_2, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
 	//速度区域
 	SpeedVal=m_dbSpeed*m_XiShu[1];
 	str.Format("%.2fKm/h",SpeedVal);
-	pMemDc->DrawText(str,m_RectSpeedShow, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
+	pDc->DrawText(str,m_RectSpeedShow, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
 	////总里程区域
 	//str.Format(L"%.2fKm",m_dbTotalMileage);
 	//   dc.DrawText(str,m_RectTotalMileageShow, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
@@ -2829,16 +2811,16 @@ void CGigeCameraDemoDlg::RefreshUI()
 	font.DeleteObject(); 
 
 	CPen RectPen(PS_SOLID,5,RGB(255,0,0));
-	pMemDc->SelectObject(&RectPen); 
-	pMemDc->MoveTo(313,282);
-	pMemDc->LineTo((int)(313+cos((360-(180-(0+SpeedVal*3.38/5*180/27)))*PI/180)*200),(int)(282+sin((360-(180-(0+SpeedVal*3.38/5*180/27)))*PI/180)*200));
+	pDc->SelectObject(&RectPen); 
+	pDc->MoveTo(313,282);
+	pDc->LineTo((int)(313+cos((360-(180-(0+SpeedVal*3.38/5*180/27)))*PI/180)*200),(int)(282+sin((360-(180-(0+SpeedVal*3.38/5*180/27)))*PI/180)*200));
 	RectPen.DeleteObject();
 
 	//font.CreateFont(15, 0, 0, 0, FW_BOLD,FALSE, FALSE, FALSE, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,   DEFAULT_QUALITY, DEFAULT_PITCH | FF_ROMAN, L"Times New Roman");
 	font.CreateFont(28, 0, 0, 0, FW_NORMAL,FALSE, FALSE, FALSE, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,   DEFAULT_QUALITY, DEFAULT_PITCH | FF_ROMAN, "Times New Roman");
-	pMemDc->SetBkMode(TRANSPARENT);
-	pMemDc->SetTextColor(RGB(255,255,255));    //Static控件1的字体颜色-红色
-	pMemDc->SelectObject(&font); 
+	pDc->SetBkMode(TRANSPARENT);
+	pDc->SetTextColor(RGB(255,255,255));    //Static控件1的字体颜色-红色
+	pDc->SelectObject(&font); 
 
 	//信息区域
 	//str.Format(L"2017-03-01 16:32:10.333 T:9999999-9999999 A:9999999-9999999 F:200.345");
@@ -2849,14 +2831,9 @@ void CGigeCameraDemoDlg::RefreshUI()
 
 	if((iInfo=m_strInfo.Find('$'))>1)
 		m_strInfo=m_strInfo.Mid(1,iInfo-1);
-	pMemDc->DrawText(m_strInfo,m_RectInfoShow, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
-
-	pWnd->GetClientRect(&rect);//获取句柄指向控件区域的大小
-	pDc->BitBlt(0,0,rect.Width(),rect.Height(),pMemDc,0,0,SRCCOPY);
-
+	pDc->DrawText(m_strInfo,m_RectInfoShow, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
 	font.DeleteObject(); 
-	bmp.DeleteObject();
-	pMemDc->DeleteDC();
+
 }
 
 void CGigeCameraDemoDlg::OnLButtonDown(UINT nFlags, CPoint point)
