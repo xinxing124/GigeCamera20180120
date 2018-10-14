@@ -2700,8 +2700,10 @@ void CGigeCameraDemoDlg::RefreshUI()
 	double SpeedVal=0.0;
 	//CDC   hMemDC; //加载背景图片的内存DC
 	CImage  image;
+	CWnd *pWnd;
 	CDC *pDc = NULL;
-	pDc = GetDlgItem(IDC_VIEW_WND3)->GetDC();//获取picture的DC  
+	pWnd=GetDlgItem(IDC_VIEW_WND3);
+	pDc = pWnd->GetDC();//获取picture的DC  
 
 	ImageFrom_IDResource(IDB_PNG57,"PNG",&image);//背景图
 	
@@ -2833,7 +2835,7 @@ void CGigeCameraDemoDlg::RefreshUI()
 		m_strInfo=m_strInfo.Mid(1,iInfo-1);
 	pDc->DrawText(m_strInfo,m_RectInfoShow, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK);
 	font.DeleteObject(); 
-
+	pWnd->ReleaseDC(pDc);
 }
 
 void CGigeCameraDemoDlg::OnLButtonDown(UINT nFlags, CPoint point)

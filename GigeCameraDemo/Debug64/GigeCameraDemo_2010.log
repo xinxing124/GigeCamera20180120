@@ -1,4 +1,4 @@
-﻿生成启动时间为 10/14/2018 11:17:00 PM。
+﻿生成启动时间为 10/15/2018 5:54:17 AM。
      1>项目“C:\Users\Administrator\Desktop\ABC\GigeCamera20180120\GigeCameraDemo\GigeCameraDemo_2010.vcxproj”在节点 2 上(rebuild 个目标)。
      1>_PrepareForClean:
          正在删除文件“Debug64\GigeCameraDemo.lastbuildstate”。
@@ -60,7 +60,7 @@
      1>GigeCameraDemoDlg.cpp(2380): warning C4305: “=”: 从“double”到“float”截断
      1>GigeCameraDemoDlg.cpp(2388): warning C4101: “word”: 未引用的局部变量
      1>GigeCameraDemoDlg.cpp(2393): warning C4189: “n”: 局部变量已初始化但不引用
-     1>GigeCameraDemoDlg.cpp(2845): warning C4101: “stopstring”: 未引用的局部变量
+     1>GigeCameraDemoDlg.cpp(2847): warning C4101: “stopstring”: 未引用的局部变量
          InputDialog.cpp
          MessageDialog.cpp
      1>MessageDialog.cpp(49): warning C4100: “lparam”: 未引用的形参
@@ -102,4 +102,4 @@
 
 生成成功。
 
-已用时间 00:00:08.07
+已用时间 00:00:07.20
