@@ -864,8 +864,10 @@ void CGigeCameraDemoDlg::XferCallback_1(SapXferCallbackInfo *pInfo)
 	start = clock();
 
 	iImageType = 1;
-	//pDlg->m_View_1->Show();
-
+	if(pDlg->m_iWindowMode==2)
+	{
+		pDlg->m_View_1->Show();
+	}
 	pBuffer_1 = pDlg->m_Buffers_1;
 
 	iWidth = pBuffer_1->GetWidth();
@@ -938,8 +940,10 @@ void CGigeCameraDemoDlg::XferCallback_2(SapXferCallbackInfo *pInfo)
 	start = clock();
 
 	iImageType = 1;
-	//pDlg->m_View_1->Show();
-
+	if(pDlg->m_iWindowMode==2)
+	{
+		pDlg->m_View_2->Show();
+	}
 
 	pBuffer_2 = pDlg->m_Buffers_2;
 
@@ -2561,16 +2565,19 @@ void CGigeCameraDemoDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent==1)
 	{
 		m_TimeCount++;
-		m_View_1->Show();
-		m_View_2->Show();
+		//if(m_iWindowMode==2)
+		//{
+		//	m_View_1->Show();
+		//	m_View_2->Show();
+		//}
 		m_dFreeSpaceG=ReadFreeSpace(m_strStoragePath);
 		left=GetDirFileCount(m_strLeftPath);
 		right=GetDirFileCount(m_strRightPath);
 		if(m_TimeCount>4)
 		{
 			m_TimeCount=0;
-			if(m_RevFlag)
-			{
+			//if(m_RevFlag)
+			//{
 				::GetLocalTime(&time);
 				temp="";
 				//temp.Format("#%d-%02d-%02d %02d:%02d:%02d.%03d TLeft:%ld TRight:%ld ALeft:%ld ARight:%ld FreeSize:%.02fGB$\r\n",time.wYear,time.wMonth,time.wDay,time.wHour,time.wMinute,time.wSecond,time.wMilliseconds,m_iCountImage_1,m_iCountImage_2,left,right,m_dFreeSpaceG);
@@ -2583,7 +2590,7 @@ void CGigeCameraDemoDlg::OnTimer(UINT_PTR nIDEvent)
 					m_strInfo=temp;
 					InvalidateRect(&m_RectInfoShow);
 				}
-			}
+			//}
 		}
 		//if(this!=GetForegroundWindow())
 		//{
@@ -2676,7 +2683,10 @@ void CGigeCameraDemoDlg::ImageFrom_IDResource(UINT nID, LPCTSTR sTR, CImage *  p
 			pImg->Load(pStream);  
 			//VERIFY( m_BkImage.Load(pStream) == S_OK );  
 			pStream->Release();  
-		}  
+		}
+		UnlockResource(hglb);
+		FreeResource(hglb);
+		hglb=NULL;
 	}  
 }
 

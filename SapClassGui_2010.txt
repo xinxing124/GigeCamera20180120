@@ -1,2 +1,10 @@
-�򿪱����64λ
+﻿打开编译成64位
 C:\Program Files\Teledyne DALSA\Sapera\Classes\Gui\SapClassGui_2010.vcxproj
+
+1，安装好Sapera_LT_8.20_SDK.exe SDK后,"C:\Program Files\Teledyne DALSA\Sapera\CamExpert\camexpert.exe" 打开在Device中选择对应的相机（一般序号小的为左侧相机）。
+2，设置在Category—— Image Format Controls ——Height 2048 则保存的图片为2048X2048的图。
+3，设置在Category—— I/O Controls——Trigger Mode——On 设置接受编码信号。
+4，设置在Category—— Line Selector——Line 5 。
+5，设置在Category—— Output Line Source——On 。
+6，设置在Category—— Output Line Source——Exposure Active 。
+7，编译 C:\Program Files\Teledyne DALSA\Sapera\Classes\Gui下的SapClassGui_2010.sln，如果没有打开SapClassGui_2010.vcxproj 进行编译，编译模式为 Debug  x64位
