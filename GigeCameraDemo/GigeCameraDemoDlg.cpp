@@ -1929,13 +1929,15 @@ void CGigeCameraDemoDlg::OnPaint()
 	}
 	else
 	{
+		m_iFirstFlag=1;
+		if(m_iWindowMode==1)
+			RefreshUI();
 		CDialog::OnPaint();
 	}
 	//if(m_iFirstFlag!=1)
 	//{
 	//m_pSplashWindow->DeleteSplash();
-	m_iFirstFlag=1;
-	RefreshUI();
+
 	//}
 }
 
